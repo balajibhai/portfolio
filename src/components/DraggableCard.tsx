@@ -5,22 +5,23 @@ import "../css/Draggable.css"; // Assuming you use a CSS file for styles
 interface Card {
   id: number;
   position: { x: number; y: number };
+  text: string;
 }
 
 const DraggableCard: React.FC = () => {
   const [cards, setCards] = useState<Card[]>([
-    { id: 1, position: { x: 0, y: 0 } },
-    { id: 2, position: { x: 350, y: 0 } },
-    { id: 3, position: { x: 0, y: 250 } },
-    { id: 4, position: { x: 350, y: 250 } },
-    // { id: 5, position: { x: 0, y: 0 } },
-    // { id: 6, position: { x: 350, y: 0 } },
-    // { id: 7, position: { x: 0, y: 250 } },
-    // { id: 8, position: { x: 350, y: 250 } },
-    // { id: 9, position: { x: 0, y: 0 } },
-    // { id: 10, position: { x: 350, y: 0 } },
-    // { id: 11, position: { x: 0, y: 250 } },
-    // { id: 12, position: { x: 350, y: 250 } },
+    { id: 1, position: { x: 0, y: 0 }, text: "Work" },
+    { id: 2, position: { x: 350, y: 0 }, text: "About" },
+    { id: 3, position: { x: 700, y: 0 }, text: "Work" },
+    { id: 4, position: { x: 1050, y: 0 }, text: "About" },
+    { id: 5, position: { x: 0, y: 250 }, text: "About" },
+    { id: 6, position: { x: 350, y: 250 }, text: "Work" },
+    { id: 7, position: { x: 700, y: 250 }, text: "About" },
+    { id: 8, position: { x: 1050, y: 250 }, text: "Work" },
+    { id: 9, position: { x: 0, y: 500 }, text: "Work" },
+    { id: 10, position: { x: 350, y: 500 }, text: "About" },
+    { id: 11, position: { x: 700, y: 500 }, text: "Work" },
+    { id: 12, position: { x: 1050, y: 500 }, text: "About" },
   ]);
   const [posonStart, setPosonStart] = useState({ position: { x: 0, y: 0 } });
 
@@ -76,7 +77,7 @@ const DraggableCard: React.FC = () => {
         >
           <div className="card" style={cardStyle}>
             <h3>Card {card.id}</h3>
-            <p>Drag me!</p>
+            <p>{card.text}</p>
           </div>
         </Draggable>
       ))}
