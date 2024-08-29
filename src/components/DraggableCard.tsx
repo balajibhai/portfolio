@@ -10,9 +10,9 @@ interface Card {
 const DraggableCard: React.FC = () => {
   const [cards, setCards] = useState<Card[]>([
     { id: 1, position: { x: 0, y: 0 } },
-    { id: 2, position: { x: 250, y: 0 } },
-    { id: 3, position: { x: 0, y: 150 } },
-    { id: 4, position: { x: 250, y: 150 } },
+    { id: 2, position: { x: 350, y: 0 } },
+    { id: 3, position: { x: 0, y: 250 } },
+    { id: 4, position: { x: 350, y: 250 } },
   ]);
 
   const handleStop = (e: MouseEvent, data: DraggableData, id: number) => {
