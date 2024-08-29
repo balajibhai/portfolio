@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Draggable, { DraggableData } from "react-draggable";
+import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "../css/Draggable.css"; // Assuming you use a CSS file for styles
 
 interface Card {
@@ -13,9 +13,18 @@ const DraggableCard: React.FC = () => {
     { id: 2, position: { x: 350, y: 0 } },
     { id: 3, position: { x: 0, y: 250 } },
     { id: 4, position: { x: 350, y: 250 } },
+    // { id: 5, position: { x: 0, y: 0 } },
+    // { id: 6, position: { x: 350, y: 0 } },
+    // { id: 7, position: { x: 0, y: 250 } },
+    // { id: 8, position: { x: 350, y: 250 } },
+    // { id: 9, position: { x: 0, y: 0 } },
+    // { id: 10, position: { x: 350, y: 0 } },
+    // { id: 11, position: { x: 0, y: 250 } },
+    // { id: 12, position: { x: 350, y: 250 } },
   ]);
+  const [posonStart, setPosonStart] = useState({ position: { x: 0, y: 0 } });
 
-  const handleStop = (e: MouseEvent, data: DraggableData, id: number) => {
+  const handleDrag = (e: MouseEvent, data: DraggableData, id: number) => {
     setCards((prevCards) => {
       const updatedCards = [...prevCards];
       const draggedCardIndex = updatedCards.findIndex((card) => card.id === id);
@@ -24,7 +33,7 @@ const DraggableCard: React.FC = () => {
       if (!draggedCard) return updatedCards;
 
       // Update the position of the dragged card
-      const originalPosition = { ...draggedCard.position };
+      const originalPosition = posonStart.position;
       draggedCard.position = { x: data.x, y: data.y };
 
       // Check for collision
@@ -51,13 +60,19 @@ const DraggableCard: React.FC = () => {
     );
   };
 
+  // Handle the start of dragging to log the position immediately
+  const handleStart = (e: DraggableEvent, data: DraggableData, id: number) => {
+    setPosonStart({ position: { x: data.x, y: data.y } });
+  };
+
   return (
     <div style={{ padding: "50px", position: "relative", height: "500px" }}>
       {cards.map((card) => (
         <Draggable
           key={card.id}
           position={card.position}
-          onStop={(e, data) => handleStop(e as MouseEvent, data, card.id)}
+          onStart={(e, data) => handleStart(e, data, card.id)} // Capture position on start of drag
+          onDrag={(e, data) => handleDrag(e as MouseEvent, data, card.id)}
         >
           <div className="card" style={cardStyle}>
             <h3>Card {card.id}</h3>
@@ -80,7 +95,7 @@ const cardStyle: React.CSSProperties = {
   boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
   cursor: "grab",
   position: "absolute" as "absolute",
-  transition: "transform 0.3s ", // For CSS transition animation
+  transition: "transform 0.3s", // For CSS transition animation
 };
 
 export default DraggableCard;
