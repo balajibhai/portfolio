@@ -2,11 +2,16 @@
 import React, { useState } from "react";
 import "../css/SegmentedControl.css"; // Import the CSS file
 
-const SegmentedControl = () => {
+interface SegmentedControlProps {
+  onMenuChange: (value: string) => void;
+}
+
+const SegmentedControl = ({ onMenuChange }: SegmentedControlProps) => {
   const [active, setActive] = useState("All");
 
   const handleClick = (value: string) => {
     setActive(value);
+    onMenuChange(value);
   };
 
   return (

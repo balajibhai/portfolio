@@ -8,7 +8,11 @@ interface Card {
   text: string;
 }
 
-const DraggableCard: React.FC = () => {
+interface DraggableCardProps {
+  currentMenu: string;
+}
+
+const DraggableCard = ({ currentMenu }: DraggableCardProps) => {
   const [cards, setCards] = useState<Card[]>([
     { id: 1, position: { x: 0, y: 0 }, text: "Work" },
     { id: 2, position: { x: 350, y: 0 }, text: "About" },
@@ -66,9 +70,9 @@ const DraggableCard: React.FC = () => {
     setPosonStart({ position: { x: data.x, y: data.y } });
   };
 
-  return (
-    <div style={{ padding: "50px", position: "relative", height: "500px" }}>
-      {cards.map((card) => (
+  const handleCards = (card: any) => {
+    if (card.text === currentMenu || currentMenu === "All") {
+      return (
         <Draggable
           key={card.id}
           position={card.position}
@@ -80,6 +84,14 @@ const DraggableCard: React.FC = () => {
             <p>{card.text}</p>
           </div>
         </Draggable>
+      );
+    }
+  };
+
+  return (
+    <div style={{ padding: "50px", position: "relative", height: "500px" }}>
+      {cards.map((card) => (
+        <>{handleCards(card)}</>
       ))}
     </div>
   );
