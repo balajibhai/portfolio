@@ -70,29 +70,44 @@ const DraggableCard = ({ currentMenu }: DraggableCardProps) => {
     setPosonStart({ position: { x: data.x, y: data.y } });
   };
 
-  const handleCards = (card: any) => {
-    if (card.text === currentMenu || currentMenu === "All") {
-      return (
-        <Draggable
-          key={card.id}
-          position={card.position}
-          onStart={(e, data) => handleStart(e, data, card.id)} // Capture position on start of drag
-          onDrag={(e, data) => handleDrag(e as MouseEvent, data, card.id)}
-        >
-          <div className="card" style={cardStyle}>
-            <h3>Card {card.id}</h3>
-            <p>{card.text}</p>
-          </div>
-        </Draggable>
-      );
-    }
+  const handleCards = (
+    card: any,
+    adjustedIndex: number,
+    currentMenu: string
+  ) => {
+    // Calculate new position by incrementing x by 250 times the adjusted index
+    const newPosition = {
+      x: 250 * adjustedIndex,
+      y: 0,
+    };
+    const position =
+      currentMenu === "About" || currentMenu === "Work"
+        ? newPosition
+        : card.position;
+
+    return (
+      <Draggable
+        key={card.id}
+        position={position}
+        onStart={(e, data) => handleStart(e, data, card.id)} // Capture position on start of drag
+        onDrag={(e, data) => handleDrag(e as MouseEvent, data, card.id)}
+      >
+        <div className="card" style={cardStyle}>
+          <h3>Card {card.id}</h3>
+          <p>{card.text}</p>
+        </div>
+      </Draggable>
+    );
   };
 
   return (
     <div style={{ padding: "50px", position: "relative", height: "500px" }}>
-      {cards.map((card) => (
-        <>{handleCards(card)}</>
-      ))}
+      {cards.reduce((acc, card) => {
+        if (card.text === currentMenu || currentMenu === "All") {
+          acc.push(handleCards(card, acc.length, currentMenu));
+        }
+        return acc;
+      }, [] as JSX.Element[])}
     </div>
   );
 };
