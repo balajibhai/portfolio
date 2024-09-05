@@ -2,7 +2,7 @@
 import SegmentedControl from "./components/SegmentedControl";
 import DraggableCard from "./components/DraggableCard";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./App.css";
 
 function App() {
@@ -10,14 +10,10 @@ function App() {
   const onMenuChange = (value: string) => {
     setMenuValue(value);
   };
-  const [linkValue, setLinkValue] = useState("");
-
-  const handleLinkClick = (value: string) => {
-    setLinkValue(value);
-  };
+  const location = useLocation();
 
   const handleRoute = () => {
-    if (linkValue === "link1") {
+    if (location.pathname === "/link1") {
       return (
         <div>
           <SegmentedControl onMenuChange={onMenuChange} />
@@ -40,21 +36,13 @@ function App() {
   };
 
   const redirectUI = () => {
-    if (!linkValue) {
+    if (location.pathname === "/") {
       return (
         <>
-          <Link
-            to="/link1"
-            className="link-button"
-            onClick={() => handleLinkClick("link1")}
-          >
+          <Link to="/link1" className="link-button">
             Go to Link 1
           </Link>
-          <Link
-            to="/link2"
-            className="link-button"
-            onClick={() => handleLinkClick("link2")}
-          >
+          <Link to="/link2" className="link-button">
             Go to Link 2
           </Link>
         </>
@@ -64,7 +52,7 @@ function App() {
   };
 
   return (
-    <div className={linkValue === "link1" ? "first-link" : "App"}>
+    <div className={location.pathname === "/link1" ? "first-link" : "App"}>
       {
         <div style={parentLinkStyle}>
           <div style={childLinkStyle}>{redirectUI()}</div>
