@@ -29,22 +29,47 @@ function App() {
     }
   };
 
+  const parentLinkStyle = {
+    display: "flex",
+    width: "500px",
+  };
+
+  const childLinkStyle = {
+    display: "flex",
+    gap: "20px", // Add space between the links
+  };
+
+  const redirectUI = () => {
+    if (!linkValue) {
+      return (
+        <>
+          <Link
+            to="/link1"
+            className="link-button"
+            onClick={() => handleLinkClick("link1")}
+          >
+            Go to Link 1
+          </Link>
+          <Link
+            to="/link2"
+            className="link-button"
+            onClick={() => handleLinkClick("link2")}
+          >
+            Go to Link 2
+          </Link>
+        </>
+      );
+    }
+    return <div style={{ backgroundColor: "#1a1a1a !important" }}></div>;
+  };
+
   return (
-    <div className="App">
-      <Link
-        to="/link1"
-        className="link-button"
-        onClick={() => handleLinkClick("link1")}
-      >
-        Go to Target Page
-      </Link>
-      <Link
-        to="/link2"
-        className="link-button"
-        onClick={() => handleLinkClick("link2")}
-      >
-        Go to Target Page
-      </Link>
+    <div className={linkValue === "link1" ? "first-link" : "App"}>
+      {
+        <div style={parentLinkStyle}>
+          <div style={childLinkStyle}>{redirectUI()}</div>
+        </div>
+      }
       {handleRoute()}
     </div>
   );

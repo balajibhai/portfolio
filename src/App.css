@@ -1,11 +1,3 @@
-.App {
-  text-align: center;
-  background-color: #1a1a1a !important; /* Dark background */
-  font-family: Arial, sans-serif;
-  min-height: 100vh; /* Ensure full height of viewport */
-  margin: 0; /* Remove default margin */
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -39,4 +31,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.first-link {
+  text-align: center;
+  background-color: #1a1a1a !important; /* Dark background */
+  font-family: Arial, sans-serif;
+  min-height: 100vh; /* Ensure full height of viewport */
+  margin: 0; /* Remove default margin */
 }
