@@ -1,4 +1,3 @@
-// App.js
 import SegmentedControl from "./components/SegmentedControl";
 import DraggableCard from "./components/DraggableCard";
 import { useState } from "react";
@@ -53,11 +52,21 @@ function App() {
 
   return (
     <div className={location.pathname === "/link1" ? "first-link" : "App"}>
-      {
-        <div style={parentLinkStyle}>
-          <div style={childLinkStyle}>{redirectUI()}</div>
-        </div>
-      }
+      <div
+        className="background-video"
+        style={
+          location.pathname !== "/link1"
+            ? { display: "none" }
+            : { display: "block" }
+        }
+      >
+        <video autoPlay loop muted id="video-background">
+          <source src="/ocean.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div style={parentLinkStyle}>
+        <div style={childLinkStyle}>{redirectUI()}</div>
+      </div>
       {handleRoute()}
     </div>
   );
