@@ -1,5 +1,5 @@
+import { Routes, Route, Link } from "react-router-dom";
 import { useCallback, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { styled } from "@mui/system";
 import SegmentedControl from "./components/SegmentedControl";
 import DraggableCard from "./components/DraggableCard";
@@ -46,80 +46,69 @@ const ChildLinkContainer = styled("div")({
 
 const App = () => {
   const [menuValue, setMenuValue] = useState("All");
-  const location = useLocation();
-
   const onMenuChange = useCallback((value: string) => {
     setMenuValue(value);
   }, []);
 
   return (
-    <AppContainer
-      className={location.pathname === "/link1" ? "first-link" : "App"}
-    >
-      {location.pathname === "/link1" && (
-        <BackgroundVideoContainer>
-          <Video autoPlay loop muted>
-            <source src="/ocean.mp4" type="video/mp4" />
-          </Video>
-        </BackgroundVideoContainer>
-      )}
-
-      <ParentLinkContainer>
-        <ChildLinkContainer>
-          <RedirectUI location={location} />
-        </ChildLinkContainer>
-      </ParentLinkContainer>
-
-      <RouteHandler
-        location={location}
-        menuValue={menuValue}
-        onMenuChange={onMenuChange}
-      />
+    <AppContainer>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/link1"
+          element={
+            <PageWithBackgroundVideo
+              onMenuChange={onMenuChange}
+              menuValue={menuValue}
+            />
+          }
+        />
+        <Route path="/link2" element={<Link2 />} />
+      </Routes>
     </AppContainer>
   );
 };
 
-// Functional component for handling routes
-interface RouteHandlerProps {
-  location: ReturnType<typeof useLocation>;
+// Home component for displaying the main links
+const Home = () => {
+  return (
+    <ParentLinkContainer>
+      <ChildLinkContainer>
+        <LinkButton to="/link1">Go to Link 1</LinkButton>
+        <LinkButton to="/link2">Go to Link 2</LinkButton>
+      </ChildLinkContainer>
+    </ParentLinkContainer>
+  );
+};
+
+// Component for the first page with video background and draggable cards
+interface PageWithBackgroundVideoProps {
   menuValue: string;
   onMenuChange: (value: string) => void;
 }
 
-const RouteHandler = ({
-  location,
+const PageWithBackgroundVideo = ({
   menuValue,
   onMenuChange,
-}: RouteHandlerProps) => {
-  if (location.pathname === "/link1") {
-    return (
-      <div>
-        <SegmentedControl onMenuChange={onMenuChange} />
-        <div style={{ padding: "50px" }}>
-          <DraggableCard currentMenu={menuValue} />
-        </div>
+}: PageWithBackgroundVideoProps) => {
+  return (
+    <>
+      <BackgroundVideoContainer>
+        <Video autoPlay loop muted>
+          <source src="/ocean.mp4" type="video/mp4" />
+        </Video>
+      </BackgroundVideoContainer>
+      <SegmentedControl onMenuChange={onMenuChange} />
+      <div style={{ padding: "50px" }}>
+        <DraggableCard currentMenu={menuValue} />
       </div>
-    );
-  }
-  return null;
+    </>
+  );
 };
 
-// Functional component for handling redirection UI
-interface RedirectUIProps {
-  location: ReturnType<typeof useLocation>;
-}
-
-const RedirectUI = ({ location }: RedirectUIProps) => {
-  if (location.pathname === "/") {
-    return (
-      <>
-        <LinkButton to="/link1">Go to Link 1</LinkButton>
-        <LinkButton to="/link2">Go to Link 2</LinkButton>
-      </>
-    );
-  }
-
-  return <div style={{ backgroundColor: "#1a1a1a" }}></div>;
+// Second link page (for demonstration)
+const Link2 = () => {
+  return <div style={{ backgroundColor: "#1a1a1a" }}>This is Link 2 Page</div>;
 };
 
 export default App;
