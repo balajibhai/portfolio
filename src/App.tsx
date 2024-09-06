@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { styled } from "@mui/system"; // Import the styled API from MUI
+import { styled } from "@mui/system";
 import SegmentedControl from "./components/SegmentedControl";
 import DraggableCard from "./components/DraggableCard";
 
-// Define your styled components using MUI's styled API
 const AppContainer = styled("div")(({ theme }) => ({
   height: "100vh",
   position: "relative",

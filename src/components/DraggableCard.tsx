@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
-import "../css/Draggable.css"; // Assuming you use a CSS file for styles
-
+import "../css/Draggable.css";
 interface Card {
   id: number;
   position: { x: number; y: number };
@@ -65,7 +64,6 @@ const DraggableCard = ({ currentMenu }: DraggableCardProps) => {
     );
   };
 
-  // Handle the start of dragging to log the position immediately
   const handleStart = (e: DraggableEvent, data: DraggableData, id: number) => {
     setPosonStart({ position: { x: data.x, y: data.y } });
   };

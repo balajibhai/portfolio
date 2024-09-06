@@ -1,6 +1,5 @@
-// SegmentedControl.js
 import React, { useState } from "react";
-import "../css/SegmentedControl.css"; // Import the CSS file
+import "../css/SegmentedControl.css";
 
 interface SegmentedControlProps {
   onMenuChange: (value: string) => void;
