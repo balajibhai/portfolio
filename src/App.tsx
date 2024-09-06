@@ -1,8 +1,49 @@
-import SegmentedControl from "./components/SegmentedControl";
-import DraggableCard from "./components/DraggableCard";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./App.css";
+import { styled } from "@mui/system"; // Import the styled API from MUI
+import SegmentedControl from "./components/SegmentedControl";
+import DraggableCard from "./components/DraggableCard";
+
+// Define your styled components using MUI's styled API
+const AppContainer = styled("div")(({ theme }) => ({
+  height: "100vh",
+  position: "relative",
+  overflow: "hidden",
+  fontFamily: "Arial, sans-serif",
+}));
+
+const BackgroundVideoContainer = styled("div")({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  zIndex: -1,
+  overflow: "hidden",
+});
+
+const Video = styled("video")({
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+});
+
+const LinkButton = styled(Link)({
+  color: "#61dafb",
+  textDecoration: "none",
+  padding: "10px",
+  fontSize: "1.2rem",
+});
+
+const ParentLinkContainer = styled("div")({
+  display: "flex",
+  width: "500px",
+});
+
+const ChildLinkContainer = styled("div")({
+  display: "flex",
+  gap: "20px",
+});
 
 function App() {
   const [menuValue, setMenuValue] = useState("All");
@@ -24,51 +65,35 @@ function App() {
     }
   };
 
-  const parentLinkStyle = {
-    display: "flex",
-    width: "500px",
-  };
-
-  const childLinkStyle = {
-    display: "flex",
-    gap: "20px", // Add space between the links
-  };
-
   const redirectUI = () => {
     if (location.pathname === "/") {
       return (
         <>
-          <Link to="/link1" className="link-button">
-            Go to Link 1
-          </Link>
-          <Link to="/link2" className="link-button">
-            Go to Link 2
-          </Link>
+          <LinkButton to="/link1">Go to Link 1</LinkButton>
+          <LinkButton to="/link2">Go to Link 2</LinkButton>
         </>
       );
     }
-    return <div style={{ backgroundColor: "#1a1a1a !important" }}></div>;
+    return <div style={{ backgroundColor: "#1a1a1a" }}></div>;
   };
 
   return (
-    <div className={location.pathname === "/link1" ? "first-link" : "App"}>
-      <div
-        className="background-video"
-        style={
-          location.pathname !== "/link1"
-            ? { display: "none" }
-            : { display: "block" }
-        }
-      >
-        <video autoPlay loop muted id="video-background">
-          <source src="/ocean.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <div style={parentLinkStyle}>
-        <div style={childLinkStyle}>{redirectUI()}</div>
-      </div>
+    <AppContainer
+      className={location.pathname === "/link1" ? "first-link" : "App"}
+    >
+      {location.pathname === "/link1" && (
+        <BackgroundVideoContainer>
+          <Video autoPlay loop muted>
+            <source src="/ocean.mp4" type="video/mp4" />
+          </Video>
+        </BackgroundVideoContainer>
+      )}
+
+      <ParentLinkContainer>
+        <ChildLinkContainer>{redirectUI()}</ChildLinkContainer>
+      </ParentLinkContainer>
       {handleRoute()}
-    </div>
+    </AppContainer>
   );
 }
 
