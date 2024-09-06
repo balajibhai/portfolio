@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import "../css/Draggable.css";
+
 interface Card {
   id: number;
   position: { x: number; y: number };
@@ -26,6 +27,7 @@ const DraggableCard = ({ currentMenu }: DraggableCardProps) => {
     { id: 11, position: { x: 700, y: 500 }, text: "Work" },
     { id: 12, position: { x: 1050, y: 500 }, text: "About" },
   ]);
+
   const [positionBeforeDrag, setPositionBeforeDrag] = useState({
     position: { x: 0, y: 0 },
   });
@@ -70,45 +72,64 @@ const DraggableCard = ({ currentMenu }: DraggableCardProps) => {
     setPositionBeforeDrag({ position: { x: data.x, y: data.y } });
   };
 
-  const handleCards = (
-    card: any,
-    adjustedIndex: number,
-    currentMenu: string
-  ) => {
-    // Calculate new position by incrementing x by 250 times the adjusted index
-    const newPosition = {
-      x: 250 * adjustedIndex,
-      y: 0,
-    };
-    const position =
-      currentMenu === "About" || currentMenu === "Work"
-        ? newPosition
-        : card.position;
-
-    return (
-      <Draggable
-        key={card.id}
-        position={position}
-        onStart={(e, data) => handleStart(e, data, card.id)} // Capture position on start of drag
-        onDrag={(e, data) => handleDrag(e as MouseEvent, data, card.id)}
-      >
-        <div className="card" style={cardStyle}>
-          <h3>Card {card.id}</h3>
-          <p>{card.text}</p>
-        </div>
-      </Draggable>
-    );
-  };
-
   return (
     <div style={{ padding: "50px", position: "relative", height: "500px" }}>
       {cards.reduce((acc, card) => {
         if (card.text === currentMenu || currentMenu === "All") {
-          acc.push(handleCards(card, acc.length, currentMenu));
+          acc.push(
+            <CardComponent
+              key={card.id}
+              card={card}
+              handleStart={handleStart}
+              handleDrag={handleDrag}
+              currentMenu={currentMenu}
+              adjustedIndex={acc.length}
+            />
+          );
         }
         return acc;
       }, [] as JSX.Element[])}
     </div>
+  );
+};
+
+// Separate functional component for the card
+interface CardComponentProps {
+  card: Card;
+  handleStart: (e: DraggableEvent, data: DraggableData, id: number) => void;
+  handleDrag: (e: MouseEvent, data: DraggableData, id: number) => void;
+  currentMenu: string;
+  adjustedIndex: number;
+}
+
+const CardComponent = ({
+  card,
+  handleStart,
+  handleDrag,
+  currentMenu,
+  adjustedIndex,
+}: CardComponentProps) => {
+  // Calculate new position by incrementing x by 250 times the adjusted index
+  const newPosition = {
+    x: 250 * adjustedIndex,
+    y: 0,
+  };
+  const position =
+    currentMenu === "About" || currentMenu === "Work"
+      ? newPosition
+      : card.position;
+
+  return (
+    <Draggable
+      position={position}
+      onStart={(e, data) => handleStart(e, data, card.id)}
+      onDrag={(e, data) => handleDrag(e as MouseEvent, data, card.id)}
+    >
+      <div className="card" style={cardStyle}>
+        <h3>Card {card.id}</h3>
+        <p>{card.text}</p>
+      </div>
+    </Draggable>
   );
 };
 
