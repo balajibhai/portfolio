@@ -26,7 +26,9 @@ const DraggableCard = ({ currentMenu }: DraggableCardProps) => {
     { id: 11, position: { x: 700, y: 500 }, text: "Work" },
     { id: 12, position: { x: 1050, y: 500 }, text: "About" },
   ]);
-  const [posonStart, setPosonStart] = useState({ position: { x: 0, y: 0 } });
+  const [positionBeforeDrag, setPositionBeforeDrag] = useState({
+    position: { x: 0, y: 0 },
+  });
 
   const handleDrag = (e: MouseEvent, data: DraggableData, id: number) => {
     setCards((prevCards) => {
@@ -37,7 +39,7 @@ const DraggableCard = ({ currentMenu }: DraggableCardProps) => {
       if (!draggedCard) return updatedCards;
 
       // Update the position of the dragged card
-      const originalPosition = posonStart.position;
+      const originalPosition = positionBeforeDrag.position;
       draggedCard.position = { x: data.x, y: data.y };
 
       // Check for collision
@@ -65,7 +67,7 @@ const DraggableCard = ({ currentMenu }: DraggableCardProps) => {
   };
 
   const handleStart = (e: DraggableEvent, data: DraggableData, id: number) => {
-    setPosonStart({ position: { x: data.x, y: data.y } });
+    setPositionBeforeDrag({ position: { x: data.x, y: data.y } });
   };
 
   const handleCards = (
