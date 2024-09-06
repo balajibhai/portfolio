@@ -44,36 +44,12 @@ const ChildLinkContainer = styled("div")({
   gap: "20px",
 });
 
-function App() {
+const App = () => {
   const [menuValue, setMenuValue] = useState("All");
-  const onMenuChange = (value: string) => {
-    setMenuValue(value);
-  };
   const location = useLocation();
 
-  const handleRoute = () => {
-    if (location.pathname === "/link1") {
-      return (
-        <div>
-          <SegmentedControl onMenuChange={onMenuChange} />
-          <div style={{ padding: "50px" }}>
-            <DraggableCard currentMenu={menuValue} />
-          </div>
-        </div>
-      );
-    }
-  };
-
-  const redirectUI = () => {
-    if (location.pathname === "/") {
-      return (
-        <>
-          <LinkButton to="/link1">Go to Link 1</LinkButton>
-          <LinkButton to="/link2">Go to Link 2</LinkButton>
-        </>
-      );
-    }
-    return <div style={{ backgroundColor: "#1a1a1a" }}></div>;
+  const onMenuChange = (value: string) => {
+    setMenuValue(value);
   };
 
   return (
@@ -89,11 +65,61 @@ function App() {
       )}
 
       <ParentLinkContainer>
-        <ChildLinkContainer>{redirectUI()}</ChildLinkContainer>
+        <ChildLinkContainer>
+          <RedirectUI location={location} />
+        </ChildLinkContainer>
       </ParentLinkContainer>
-      {handleRoute()}
+
+      <RouteHandler
+        location={location}
+        menuValue={menuValue}
+        onMenuChange={onMenuChange}
+      />
     </AppContainer>
   );
+};
+
+// Functional component for handling routes
+interface RouteHandlerProps {
+  location: ReturnType<typeof useLocation>;
+  menuValue: string;
+  onMenuChange: (value: string) => void;
 }
+
+const RouteHandler = ({
+  location,
+  menuValue,
+  onMenuChange,
+}: RouteHandlerProps) => {
+  if (location.pathname === "/link1") {
+    return (
+      <div>
+        <SegmentedControl onMenuChange={onMenuChange} />
+        <div style={{ padding: "50px" }}>
+          <DraggableCard currentMenu={menuValue} />
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
+// Functional component for handling redirection UI
+interface RedirectUIProps {
+  location: ReturnType<typeof useLocation>;
+}
+
+const RedirectUI = ({ location }: RedirectUIProps) => {
+  if (location.pathname === "/") {
+    return (
+      <>
+        <LinkButton to="/link1">Go to Link 1</LinkButton>
+        <LinkButton to="/link2">Go to Link 2</LinkButton>
+      </>
+    );
+  }
+
+  return <div style={{ backgroundColor: "#1a1a1a" }}></div>;
+};
 
 export default App;
