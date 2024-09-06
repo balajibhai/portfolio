@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { styled } from "@mui/system";
 import SegmentedControl from "./components/SegmentedControl";
@@ -48,9 +48,9 @@ const App = () => {
   const [menuValue, setMenuValue] = useState("All");
   const location = useLocation();
 
-  const onMenuChange = (value: string) => {
+  const onMenuChange = useCallback((value: string) => {
     setMenuValue(value);
-  };
+  }, []);
 
   return (
     <AppContainer
