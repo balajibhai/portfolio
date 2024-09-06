@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
-import "../css/Draggable.css";
 
 interface Card {
   id: number;
@@ -125,7 +124,7 @@ const CardComponent = ({
       onStart={(e, data) => handleStart(e, data, card.id)}
       onDrag={(e, data) => handleDrag(e as MouseEvent, data, card.id)}
     >
-      <div className="card" style={cardStyle}>
+      <div style={cardStyle}>
         <h3>Card {card.id}</h3>
         <p>{card.text}</p>
       </div>
