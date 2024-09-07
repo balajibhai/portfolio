@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { styled } from "@mui/system";
 import SegmentedControl from "./components/SegmentedControl";
 import DraggableCard from "./components/DraggableCard";
+import Voyage from "./components/Voyage";
 
 const AppContainer = styled("div")(({ theme }) => ({
   height: "100vh",
@@ -63,7 +64,7 @@ const App = () => {
             />
           }
         />
-        <Route path="/link2" element={<Link2 />} />
+        <Route path="/link2" element={<Voyage />} />
       </Routes>
     </AppContainer>
   );
@@ -104,11 +105,6 @@ const PageWithBackgroundVideo = ({
       </div>
     </>
   );
-};
-
-// Second link page (for demonstration)
-const Link2 = () => {
-  return <div style={{ backgroundColor: "#1a1a1a" }}>This is Link 2 Page</div>;
 };
 
 export default App;
