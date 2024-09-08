@@ -1,10 +1,12 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { Box, Typography, IconButton, MenuItem, Select } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import MenuIcon from "@mui/icons-material/Menu";
+import Text from "./components/Text";
+import Dropdown from "./components/Dropdown";
 
 const NavbarContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -45,30 +47,8 @@ const RightSection = styled(Box)(({ theme }) => ({
   },
 }));
 
-const NavLink = styled(Typography)(({ theme }) => ({
-  cursor: "pointer",
-  "&:hover": {
-    color: "#007BFF",
-  },
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "14px",
-  },
-}));
-
-const CurrencySelector = styled(Select)(({ theme }) => ({
-  marginRight: "10px",
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "14px",
-  },
-}));
-
 const Navbar = () => {
-  const [currency, setCurrency] = React.useState("USD");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-
-  const handleCurrencyChange = (event: any) => {
-    setCurrency(event.target.value);
-  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -78,10 +58,10 @@ const Navbar = () => {
     <NavbarContainer>
       {/* Left section */}
       <LeftSection>
-        <NavLink variant="body1">Destinations</NavLink>
-        <NavLink variant="body1">List your home</NavLink>
-        <NavLink variant="body1">Offers</NavLink>
-        <NavLink variant="body1">Journal</NavLink>
+        <Text variant="body1" content="Destinations" />
+        <Text variant="body1" content="List your home" />
+        <Text variant="body1" content="Offers" />
+        <Text variant="body1" content="Journal" />
       </LeftSection>
 
       {/* Mobile menu icon for small screens */}
@@ -90,22 +70,16 @@ const Navbar = () => {
       </MobileMenuIcon>
 
       {/* Middle Section (Logo) */}
-      <Typography variant="h6" sx={{ flexGrow: 1, textAlign: "center" }}>
-        onefinestay
-      </Typography>
+      <Text
+        variant="h6"
+        sx={{ flexGrow: 1, textAlign: "center" }}
+        content="onefinestay"
+        component="Typography"
+      />
 
       {/* Right section */}
       <RightSection>
-        <CurrencySelector
-          value={currency}
-          onChange={handleCurrencyChange}
-          displayEmpty
-          inputProps={{ "aria-label": "Without label" }}
-        >
-          <MenuItem value="USD">$ USD</MenuItem>
-          <MenuItem value="EUR">€ EUR</MenuItem>
-          <MenuItem value="GBP">£ GBP</MenuItem>
-        </CurrencySelector>
+        <Dropdown />
 
         <IconButton aria-label="favorites">
           <FavoriteBorderIcon />
@@ -119,12 +93,12 @@ const Navbar = () => {
           <PhoneIcon />
         </IconButton>
 
-        <Typography
+        <Text
           variant="body1"
           sx={{ display: { xs: "none", sm: "block" } }}
-        >
-          Get in touch
-        </Typography>
+          content="Get in touch"
+          component="Typography"
+        />
       </RightSection>
     </NavbarContainer>
   );

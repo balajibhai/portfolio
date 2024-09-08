@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { styled } from "@mui/system";
 import SegmentedControl from "./components/SegmentedControl";
 import DraggableCard from "./components/DraggableCard";
-import Voyage from "./components/Voyage";
+import Voyage from "./Voyage";
 
 const AppContainer = styled("div")(({ theme }) => ({
   height: "100vh",
