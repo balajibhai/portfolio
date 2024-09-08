@@ -1,12 +1,8 @@
-import React from "react";
 import { styled } from "@mui/system";
 import { Box, IconButton } from "@mui/material";
-import PhoneIcon from "@mui/icons-material/Phone";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import MenuIcon from "@mui/icons-material/Menu";
 import Text from "./components/Text";
 import Dropdown from "./components/Dropdown";
+import Icons from "./components/Icons";
 
 const NavbarContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -30,13 +26,6 @@ const LeftSection = styled(Box)(({ theme }) => ({
   },
 }));
 
-const MobileMenuIcon = styled(IconButton)(({ theme }) => ({
-  display: "none",
-  [theme.breakpoints.down("sm")]: {
-    display: "block", // Display the menu icon on smaller screens
-  },
-}));
-
 const RightSection = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -48,12 +37,6 @@ const RightSection = styled(Box)(({ theme }) => ({
 }));
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
   return (
     <NavbarContainer>
       {/* Left section */}
@@ -63,11 +46,6 @@ const Navbar = () => {
         <Text variant="body1" content="Offers" />
         <Text variant="body1" content="Journal" />
       </LeftSection>
-
-      {/* Mobile menu icon for small screens */}
-      <MobileMenuIcon onClick={toggleMobileMenu}>
-        <MenuIcon />
-      </MobileMenuIcon>
 
       {/* Middle Section (Logo) */}
       <Text
@@ -80,18 +58,7 @@ const Navbar = () => {
       {/* Right section */}
       <RightSection>
         <Dropdown />
-
-        <IconButton aria-label="favorites">
-          <FavoriteBorderIcon />
-        </IconButton>
-
-        <IconButton aria-label="account">
-          <PersonOutlineIcon />
-        </IconButton>
-
-        <IconButton aria-label="phone">
-          <PhoneIcon />
-        </IconButton>
+        <Icons />
 
         <Text
           variant="body1"
