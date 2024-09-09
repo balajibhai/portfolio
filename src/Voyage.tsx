@@ -1,28 +1,17 @@
 import { styled } from "@mui/system";
-import { Box, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import Text from "./components/Text";
 import Dropdown from "./components/Dropdown";
 import Icons from "./components/Icons";
-
-const NavbarContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "10px 20px",
-  backgroundColor: "#fff",
-  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-  [theme.breakpoints.down("sm")]: {
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
-}));
+import NavbarContainer from "./components/NavbarContainer";
+import { useState } from "react";
 
 const LeftSection = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: "20px",
   [theme.breakpoints.down("sm")]: {
-    display: "none", // hide the left section on smaller screens
+    display: "none", // Hide the left section on smaller screens
   },
 }));
 
@@ -37,8 +26,14 @@ const RightSection = styled(Box)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const [isNavbarHovered, setIsNavbarHovered] = useState(false);
+
+  const handleHoverChange = (hovered: boolean) => {
+    setIsNavbarHovered(hovered);
+  };
+
   return (
-    <NavbarContainer>
+    <NavbarContainer onHoverChange={handleHoverChange}>
       {/* Left section */}
       <LeftSection>
         <Text variant="body1" content="Destinations" />
@@ -57,9 +52,8 @@ const Navbar = () => {
 
       {/* Right section */}
       <RightSection>
-        <Dropdown />
+        <Dropdown isNavbarHovered={isNavbarHovered} />
         <Icons />
-
         <Text
           variant="body1"
           sx={{ display: { xs: "none", sm: "block" } }}
