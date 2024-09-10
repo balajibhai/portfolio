@@ -1,28 +1,23 @@
-import { MenuItem, Select, SelectProps } from "@mui/material";
+import { MenuItem, Select } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 
-type CurrencySelectorProps = SelectProps<unknown> & {
-  isNavbarHovered: boolean;
-};
-
-// Style the Select component and destructure the custom prop
-const CurrencySelector = styled((props: CurrencySelectorProps) => (
-  <Select {...props} />
-))(({ theme, isNavbarHovered }) => ({
-  marginRight: "10px",
-  color: isNavbarHovered ? "black" : "inherit", // Change color based on hover
-  transition: "color 0.3s ease", // Smooth transition effect for color
-  "& .MuiSelect-icon": {
-    color: isNavbarHovered ? "black" : "inherit", // Change dropdown arrow color
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: isNavbarHovered ? "black" : "inherit", // Change border color based on hover
-  },
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "14px",
-  },
-}));
+const CurrencySelector = styled(Select)<{ isNavbarHovered: boolean }>(
+  ({ theme, isNavbarHovered }) => ({
+    marginRight: "10px",
+    color: isNavbarHovered ? "black" : "inherit", // Change color based on hover
+    transition: "color 0.3s ease", // Smooth transition effect for color
+    "& .MuiSelect-icon": {
+      color: isNavbarHovered ? "black" : "inherit", // Change dropdown arrow color
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: isNavbarHovered ? "black" : "inherit", // Change border color based on hover
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "14px",
+    },
+  })
+);
 
 interface DropdownProps {
   isNavbarHovered: boolean;

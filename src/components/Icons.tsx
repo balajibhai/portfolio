@@ -6,6 +6,14 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/system";
 
+// Styled IconButton that will change color when isNavbarHovered is true
+const StyledIconButton = styled(IconButton)<{ isNavbarHovered: boolean }>(
+  ({ isNavbarHovered }) => ({
+    color: isNavbarHovered ? "black" : "inherit", // Change color based on hover
+    transition: "color 0.3s ease", // Smooth transition effect for color change
+  })
+);
+
 const MobileMenuIcon = styled(IconButton)(({ theme }) => ({
   display: "none",
   [theme.breakpoints.down("sm")]: {
@@ -13,31 +21,41 @@ const MobileMenuIcon = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-const Icons = () => {
+interface IconsProps {
+  isNavbarHovered: boolean;
+}
+
+const Icons = ({ isNavbarHovered }: IconsProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  {
-    /* Mobile menu icon for small screens */
-  }
-  <MobileMenuIcon onClick={toggleMobileMenu}>
-    <MenuIcon />
-  </MobileMenuIcon>;
+
   return (
     <>
-      <IconButton aria-label="favorites">
+      {/* Mobile menu icon for small screens */}
+      <MobileMenuIcon onClick={toggleMobileMenu}>
+        <MenuIcon />
+      </MobileMenuIcon>
+
+      {/* Favorites icon */}
+      <StyledIconButton
+        aria-label="favorites"
+        isNavbarHovered={isNavbarHovered}
+      >
         <FavoriteBorderIcon />
-      </IconButton>
+      </StyledIconButton>
 
-      <IconButton aria-label="account">
+      {/* Account icon */}
+      <StyledIconButton aria-label="account" isNavbarHovered={isNavbarHovered}>
         <PersonOutlineIcon />
-      </IconButton>
+      </StyledIconButton>
 
-      <IconButton aria-label="phone">
+      {/* Phone icon */}
+      <StyledIconButton aria-label="phone" isNavbarHovered={isNavbarHovered}>
         <PhoneIcon />
-      </IconButton>
+      </StyledIconButton>
     </>
   );
 };

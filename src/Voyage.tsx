@@ -53,7 +53,7 @@ const Navbar = () => {
       {/* Right section */}
       <RightSection>
         <Dropdown isNavbarHovered={isNavbarHovered} />
-        <Icons />
+        <Icons isNavbarHovered={isNavbarHovered} />
         <Text
           variant="body1"
           sx={{ display: { xs: "none", sm: "block" } }}
