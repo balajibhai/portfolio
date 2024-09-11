@@ -21,6 +21,15 @@ const MobileMenuIcon = styled(IconButton)(({ theme }) => ({
   },
 }));
 
+const VerticalSeparator = styled("div")<{ isNavbarHovered: boolean }>(
+  ({ isNavbarHovered }) => ({
+    width: "1px",
+    height: "24px", // You can adjust the height as needed
+    backgroundColor: isNavbarHovered ? "black" : "white", // Uses the theme's divider color
+    margin: "0 10px", // Adjust space around the separator
+  })
+);
+
 interface IconsProps {
   isNavbarHovered: boolean;
 }
@@ -39,6 +48,8 @@ const Icons = ({ isNavbarHovered }: IconsProps) => {
         <MenuIcon />
       </MobileMenuIcon>
 
+      <VerticalSeparator isNavbarHovered={isNavbarHovered} />
+
       {/* Favorites icon */}
       <StyledIconButton
         aria-label="favorites"
@@ -46,6 +57,7 @@ const Icons = ({ isNavbarHovered }: IconsProps) => {
       >
         <FavoriteBorderIcon />
       </StyledIconButton>
+      <VerticalSeparator isNavbarHovered={isNavbarHovered} />
 
       {/* Account icon */}
       <StyledIconButton aria-label="account" isNavbarHovered={isNavbarHovered}>
