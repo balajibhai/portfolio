@@ -4,29 +4,14 @@ import { styled } from "@mui/system";
 import SegmentedControl from "./components/SegmentedControl";
 import DraggableCard from "./components/DraggableCard";
 import Voyage from "./Voyage";
+import PageWithBackgroundVideo from "./components/PageWithBackgroundVideo";
 
-const AppContainer = styled("div")(({ theme }) => ({
+const AppContainer = styled("div")(() => ({
   height: "100vh",
   position: "relative",
   overflow: "hidden",
   fontFamily: "Arial, sans-serif",
 }));
-
-const BackgroundVideoContainer = styled("div")({
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  zIndex: -1,
-  overflow: "hidden",
-});
-
-const Video = styled("video")({
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-});
 
 const LinkButton = styled(Link)({
   color: "#61dafb",
@@ -59,9 +44,15 @@ const App = () => {
           path="/link1"
           element={
             <PageWithBackgroundVideo
-              onMenuChange={onMenuChange}
               menuValue={menuValue}
-            />
+              onMenuChange={onMenuChange}
+              src="/ocean.mp4"
+            >
+              <SegmentedControl onMenuChange={onMenuChange} />
+              <div style={{ padding: "50px" }}>
+                <DraggableCard currentMenu={menuValue} />
+              </div>
+            </PageWithBackgroundVideo>
           }
         />
         <Route path="/link2" element={<Voyage />} />
@@ -79,31 +70,6 @@ const Home = () => {
         <LinkButton to="/link2">Go to Link 2</LinkButton>
       </ChildLinkContainer>
     </ParentLinkContainer>
-  );
-};
-
-// Component for the first page with video background and draggable cards
-interface PageWithBackgroundVideoProps {
-  menuValue: string;
-  onMenuChange: (value: string) => void;
-}
-
-const PageWithBackgroundVideo = ({
-  menuValue,
-  onMenuChange,
-}: PageWithBackgroundVideoProps) => {
-  return (
-    <>
-      <BackgroundVideoContainer>
-        <Video autoPlay loop muted>
-          <source src="/ocean.mp4" type="video/mp4" />
-        </Video>
-      </BackgroundVideoContainer>
-      <SegmentedControl onMenuChange={onMenuChange} />
-      <div style={{ padding: "50px" }}>
-        <DraggableCard currentMenu={menuValue} />
-      </div>
-    </>
   );
 };
 
