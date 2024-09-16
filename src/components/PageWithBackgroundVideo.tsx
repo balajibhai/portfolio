@@ -2,9 +2,7 @@ import { styled } from "@mui/system";
 
 // Component for the first page with video background and draggable cards
 interface PageWithBackgroundVideoProps {
-  menuValue: string;
-  onMenuChange: (value: string) => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   src: string;
 }
 

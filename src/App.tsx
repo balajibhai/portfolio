@@ -43,11 +43,7 @@ const App = () => {
         <Route
           path="/link1"
           element={
-            <PageWithBackgroundVideo
-              menuValue={menuValue}
-              onMenuChange={onMenuChange}
-              src="/ocean.mp4"
-            >
+            <PageWithBackgroundVideo src="/ocean.mp4">
               <SegmentedControl onMenuChange={onMenuChange} />
               <div style={{ padding: "50px" }}>
                 <DraggableCard currentMenu={menuValue} />
